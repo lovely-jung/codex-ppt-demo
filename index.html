@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello</title>
+    <style>
+      :root {
+        --bg: #f6f7fb;
+        --glow-a: rgba(99, 102, 241, 0.28);
+        --glow-b: rgba(236, 72, 153, 0.22);
+        --fg: #0f172a;
+        --muted: rgba(15, 23, 42, 0.45);
+        --rule: rgba(15, 23, 42, 0.12);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #08090f;
+          --glow-a: rgba(99, 102, 241, 0.4);
+          --glow-b: rgba(236, 72, 153, 0.3);
+          --fg: #f8fafc;
+          --muted: rgba(248, 250, 252, 0.5);
+          --rule: rgba(248, 250, 252, 0.14);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          "Helvetica Neue", sans-serif;
+        overflow: hidden;
+      }
+
+      /* 배경의 부드러운 색 번짐 */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: -20%;
+        z-index: 0;
+        background: radial-gradient(
+            42% 42% at 28% 30%,
+            var(--glow-a) 0%,
+            transparent 70%
+          ),
+          radial-gradient(38% 38% at 74% 68%, var(--glow-b) 0%, transparent 70%);
+        filter: blur(24px);
+        animation: drift 22s ease-in-out infinite alternate;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(3.5rem, 20vw, 12rem);
+        font-weight: 600;
+        line-height: 0.95;
+        letter-spacing: -0.045em;
+      }
+
+      /* 글자를 감싸는 얇은 구분선 + 부제 */
+      .subtitle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1.75rem;
+        color: var(--muted);
+        font-size: clamp(0.75rem, 2.4vw, 0.9rem);
+        font-weight: 500;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+      }
+
+      .subtitle::before,
+      .subtitle::after {
+        content: "";
+        width: clamp(1.5rem, 8vw, 4rem);
+        height: 1px;
+        background: var(--rule);
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(1.25rem);
+        }
+      }
+
+      @keyframes drift {
+        to {
+          transform: translate3d(4%, -3%, 0) scale(1.12);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        body::before,
+        main {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>hello</h1>
+      <p class="subtitle">codex ppt demo</p>
+    </main>
+  </body>
+</html>
